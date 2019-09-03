@@ -26,3 +26,4 @@ more about Git, I recommend the free resources [Git Immersion] or [Try Git].
 [Everyday Rails Testing with RSpec]: https://leanpub.com/everydayrailsrspec
 [Git Immersion]: http://gitimmersion.com/
 [Try Git]: http://www.codeschool.com/courses/try-git
+# everydayrails-2017
