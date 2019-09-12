@@ -2,12 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Project, type: :model do
   before do
-    @user = User.create(
-      first_name: "Joe",
-      last_name: "tester",
-      email: "joetester@example.com",
-      password: "dottle-nouveau-pavilion-tights-furze",
-    )
+    @user = FactoryBot.create(:user)
 
     @user.projects.create(
       name: "Test Project",
@@ -25,12 +20,15 @@ RSpec.describe Project, type: :model do
 
   # 二人のユーザーが同じ名前を使うことは許可すること
   it "allows two users to share a project name" do
-    other_user = User.create(
-      first_name: "ichi",
-      last_name: "tatsu",
-      email: "ichi@example.com",
-      password: "dottle-nouveau-pavilion-tights-furze",
-    )
+    other_user = FactoryBot.create(:user,
+                      first_name: "ichi",
+                      last_name: "tatsu")
+    # other_user = User.create(
+    #   first_name: "ichi",
+    #   last_name: "tatsu",
+    #   email: "ichi@example.com",
+    #   password: "dottle-nouveau-pavilion-tights-furze",
+    # )
 
     other_project = other_user.projects.build(
       name: "Test Project",
@@ -47,5 +45,32 @@ RSpec.describe Project, type: :model do
     )
     other_project.valid?
     expect(other_project.errors[:name]).to include("can't be blank")
+  end
+
+  # たくさんのメモが付いていること
+  it "can have many notes" do
+    project = FactoryBot.create(:project, :with_notes)
+    expect(project.notes.length).to eq 5
+  end
+
+  # 遅延ステータス
+  describe "late status" do
+    # 締切日が過ぎていれば遅延していること
+    it "is late when the due date is past today" do
+      project = FactoryBot.create(:project_due_yesterday)
+      expect(project).to be_late
+    end
+
+    # 締切日が今日なら予定どおりであること
+    it "is ont time when the due date is today" do
+      project = FactoryBot.create(:project_due_today)
+      expect(project).to_not be_late
+    end
+
+    # 締切日が未来なら予定どおりであること
+    it "is ont time when the due date is tomorros" do
+      project = FactoryBot.create(:project_due_tomorrow)
+      expect(project).to_not be_late
+    end
   end
 end

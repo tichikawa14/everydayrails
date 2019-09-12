@@ -3,12 +3,7 @@ require 'rails_helper'
 RSpec.describe Note, type: :model do
 
   before do
-    @user = User.create(
-      first_name: "Joe",
-      last_name: "Tester",
-      email: "JoeToaser@example.com",
-      password: "dottle-nouveau-pavilion-tights-furze",
-    )
+    @user = FactoryBot.create(:user)
 
     @project = @user.projects.create(
       name: "Test Project",
