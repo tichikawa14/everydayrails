@@ -58,4 +58,5 @@ RSpec.configure do |config|
   # コントローラスペックで Devise のテストヘルパーを使用する
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :feature
 end

@@ -16,7 +16,7 @@ RSpec.describe "ProjectsApi", type: :request do
         user_token: user.authentication_token
       }
 
-      expect(rsponse).to have_http_status(:success)
+      expect(response).to have_http_status(:success)
       json = JSON.parse(response.body)
       expect(json.length).to eq 1
       project_id = json[0]["id"]
