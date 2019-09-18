@@ -83,7 +83,7 @@ GEM
     factory_bot_rails (4.10.0)
       factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
-    faker (2.2.2)
+    faker (2.3.0)
       i18n (~> 1.6.0)
     ffi (1.11.1)
     geocoder (1.5.1)
