@@ -6,32 +6,34 @@ RSpec.describe Project, type: :model do
     FactoryBot.create(:project, name: "Test Project", owner: @user)
   end
 
-  # ユーザー単位では重複したプロジェクト名を許可しないこと
-  it "does not allow duplicate project names per user" do
-    new_project = FactoryBot.build(:project, name: "Test Project", owner: @user)
-    new_project.valid?
-    expect(new_project.errors[:name]).to include("has already been taken")
-  end
+  # # ユーザー単位では重複したプロジェクト名を許可しないこと
+  # it "does not allow duplicate project names per user" do
+  #   new_project = FactoryBot.build(:project, name: "Test Project", owner: @user)
+  #   new_project.valid?
+  #   expect(new_project.errors[:name]).to include("has already been taken")
+  # end
+  #
+  # # 二人のユーザーが同じ名前を使うことは許可すること
+  # it "allows two users to share a project name" do
+  #   other_user = FactoryBot.create(:user,
+  #                     first_name: "ichi",
+  #                     last_name: "tatsu")
+  #
+  #   # other_user = User.create(
+  #   #   first_name: "ichi",
+  #   #   last_name: "tatsu",
+  #   #   email: "ichi@example.com",
+  #   #   password: "dottle-nouveau-pavilion-tights-furze",
+  #   # )
+  #   other_project = FactoryBot.build(:project, name: "Test Project", owner: other_user)
+  #   #
+  #   # other_project = other_user.projects.build(
+  #   #   name: "Test Project",
+  #   # )
+  #   expect(other_project).to be_valid
+  # end
 
-  # 二人のユーザーが同じ名前を使うことは許可すること
-  it "allows two users to share a project name" do
-    other_user = FactoryBot.create(:user,
-                      first_name: "ichi",
-                      last_name: "tatsu")
-
-    # other_user = User.create(
-    #   first_name: "ichi",
-    #   last_name: "tatsu",
-    #   email: "ichi@example.com",
-    #   password: "dottle-nouveau-pavilion-tights-furze",
-    # )
-    other_project = FactoryBot.build(:project, name: "Test Project", owner: other_user)
-    #
-    # other_project = other_user.projects.build(
-    #   name: "Test Project",
-    # )
-    expect(other_project).to be_valid
-  end
+  it { is_expected.to validate_uniqueness_of(:name).scoped_to(:user_id) }
 
   # プロジェクト名が空の場合、プロジェクトが作られないこと
   it "プロジェクト名が空の場合、プロジェクトが作られないこと" do
