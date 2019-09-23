@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Projects", type: :system do
+RSpec.feature "Projects", type: :feature do
   include LoginSupport
   let(:user) { FactoryBot.create(:user) }
 
