@@ -18,6 +18,29 @@ RSpec.feature "Projects", type: :feature do
     end
   end
 
+  # ユーザーはプロジェクトを完了済みにする
+  scenario "user complete a project", focus: true do
+    # プロジェクトを持ったユーザーを準備する
+    # ユーザーはログインしている
+    # ユーザーがプロジェクト画面を開き、
+    # "complete" ボタンをクリックすると、
+    # プロジェクトは完了済みとしてマークされる
+
+    user = FactoryBot.create(:user)
+    project = FactoryBot.create(:project, owner: user)
+    login_as user, scope: :user
+
+    visit project_path(project)
+    expect(page).to_not have_content "Completed"
+    click_button "Complete"
+
+    expect(project.reload.completed?).to be true
+    expect(page).to \
+      have_content "Congratulations, this project is complete!"
+    expect(page).to have_content "Completed"
+    expect(page).to_not have_button "Complete"
+  end
+
   # ユーザーはプロジェクトを変更する
   scenario "user update the project" do
     sign_in user
