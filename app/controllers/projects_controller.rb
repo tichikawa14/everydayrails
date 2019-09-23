@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :complete]
   before_action :project_owner?, except: [:index, :new, :create]
 
   # GET /projects
@@ -62,14 +62,24 @@ class ProjectsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
+  def complete
+    if @project.update_attributes(completed: true)
+      redirect_to @project,
+                  notice: "Congratulations, this project is complete!"
+    else
+      redirect_to @project, alert: "Unable to complete project."
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params.require(:project).permit(:name, :description, :due_on)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params.require(:project).permit(:name, :description, :due_on)
+  end
 end

@@ -35,7 +35,7 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   def expect_complete_task(name)
-    expect(page).to_not have_css "label.completed", text: name
+    expect(page).to have_css "label.completed", text: name
     expect(task.reload).to be_completed
   end
 
