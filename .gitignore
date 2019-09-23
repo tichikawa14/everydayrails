@@ -28,3 +28,6 @@
 .ruby-version
 .idea/
  .idea/everydayrails-rspec-2017.iml
+# Paperclip によってアップロードされたファイルを無視する
+/public/system
+/spec/test_uploadsaa

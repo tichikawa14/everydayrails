@@ -40,3 +40,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
+
+# テストでアップロードされたファイルが、開発環境でアップロードした
+# ファイルの中に混在しないようにする
+Paperclip::Attachment.default_options[:path] = \
+"#{Rails.root}/spec/test_uploads/:class/:id_partition/:style.:extension"
