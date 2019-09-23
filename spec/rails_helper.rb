@@ -47,7 +47,7 @@ RSpec.configure do |config|
   #       # ...
   #     end
   #
-  # The different available types are documented in the features, such as in
+  # The different available types are documented in the system, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
@@ -58,7 +58,7 @@ RSpec.configure do |config|
   # コントローラスペックで Devise のテストヘルパーを使用する
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Devise::Test::IntegrationHelpers, type: :system
 end
 
 Shoulda::Matchers.configure do |config|
